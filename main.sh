@@ -1,7 +1,8 @@
 #!/bin/bash
 # This script will update QA Environment on AUS-LNX-DEV-04
 # source helper scripts
-for f in /usr/local/sbin/te_scripts/auto_*; do source $f; done
+cur_dir=`pwd`
+for f in $cur_dir/auto_*; do source $f; done
 # enter a loop
 while true
 do

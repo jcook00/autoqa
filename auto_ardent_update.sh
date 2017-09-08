@@ -24,14 +24,13 @@ func_ardent_update() {
     echo "Preparing to update with" ${qa_env[$qa_num-1]} environment with $new_version on port number $port
     sleep 5
     echo "Please wait while we stop the container ..." ${qa_env[$qa_num-1]}
-    echo "sudo docker stop ${qa_env[$qa_num-1]}"
+    sudo docker stop ${qa_env[$qa_num-1]}
     sleep 5
     echo "Please wait while we remove the container ..." ${qa_env[$qa_num-1]}
-    echo "sudo docker rm ${qa_env[$qa_num-1]}"
+    sudo docker rm ${qa_env[$qa_num-1]}
     sleep 5
     echo "Please wait while we update the container with the new Ardent version" $new_version
-
-    echo "sudo docker run -d --name=${qa_env[$qa_num-1]} --privileged -i -p ${port}:8001 -v /var/log/ardent.io/0000/${qa_env[$qa_num-1]}:/opt/code/ardent.io/logs -v /etc/opt/code/ardent.io/config/${qa_env[$qa_num-1]}:/opt/code/ardent.io/config.json -t base-local-docker.aus-bin-prd-00.q2dc.local/ardent_v${new_version} /bin/bash -c \"cd /opt/code/ardent.io; npm start\""
+    sudo docker run -d --name=${qa_env[$qa_num-1]} --privileged -i -p ${port}:8001 -v /var/log/ardent.io/0000/${qa_env[$qa_num-1]}:/opt/code/ardent.io/logs -v /etc/opt/code/ardent.io/config/${qa_env[$qa_num-1]}:/opt/code/ardent.io/config.json -t base-local-docker.aus-bin-prd-00.q2dc.local/ardent_v${new_version} /bin/bash -c \"cd /opt/code/ardent.io; npm start\"
 
     sleep 5 
   else
