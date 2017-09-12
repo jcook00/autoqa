@@ -4,7 +4,7 @@ func_start_container() {
 
   for ((i = 0; i < ${#qa_env[@]}; ++i)); do
       position=$(( $i + 1 ))
-      echo "($position)${qa_env[$i]}"
+      echo "$position)${qa_env[$i]}"
   done
 
   echo "Please make a selection by entering the number"
