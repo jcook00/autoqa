@@ -6,7 +6,7 @@ func_file_maint(){
 # old_files=$(find . -name "*2017*")
 find . -name "*2017*" >files_to_delete
 old_files=$(cat files_to_delete)
-  echo "Do you want to delete all of these files ? Enter Y if Correct"  $old_files
+  echo "Do you want to delete all of these files ? Enter Y if Correct"	$old_files
   read response
   
   if [ `echo $response` == 'Y' ];
@@ -24,4 +24,3 @@ old_files=$(cat files_to_delete)
   fi
 
 }
-

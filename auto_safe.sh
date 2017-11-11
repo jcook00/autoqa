@@ -1,5 +1,5 @@
 #!/bin/bash
-# http://www.kfirlavi.com/blog/2012/11/06/elegant-locking-of-bash-program/ 
+# http://www.kfirlavi.com/blog/2012/11/06/elegant-locking-of-bash-program/
 readonly PROGNAME=$(basename "$0")
 readonly LOCKFILE_DIR=/tmp
 readonly LOCK_FD=200

@@ -10,14 +10,14 @@ func_stop_container() {
   echo "Please make a selection by entering the number"
   read qa_num
   echo ${qa_env[qa_num -1]}
-  echo "Is this the environment you want to Stop?" $qa_num
+  echo "Is this the environment you want to Stop? Enter Y if correct" ${qa_env[qa_num -1]}
   read response
 
   if [ `echo $response` == 'Y' ];
   then
     echo 'Please wait while we Stop your container...'
     sudo docker stop ${qa_env[qa_num -1]}
-    sleep 10
+    sleep 5
     echo 'Done'
   else
     echo 'Skipping...'

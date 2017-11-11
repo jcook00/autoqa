@@ -11,7 +11,7 @@ func_restart_container() {
   echo "Please make a selection by entering the number"
   read qa_num
   echo ${qa_env[qa_num -1]}
-  echo "Is this the environment you want to restart?" $qa_num
+  echo "Is this the environment you want to restart? Enter Y if Correct" ${qa_env[qa_num -1]}
   read response
 
   if [ `echo $response` == 'Y' ];
