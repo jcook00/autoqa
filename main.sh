@@ -18,12 +18,12 @@ do
 
 func_date
 
-  echo -e '\n\t Enter 1 to list Running QA Environment'
-  echo -e '\t Enter 2 to update UUX'
+  echo -e '\t Enter 1 to update UUX'
+  echo -e '\t Enter 2 to update Automation UUX'
   echo -e '\t Enter 3 to update Associate'
   echo -e '\t Enter 4 to pull new Ardent'
   echo -e '\t Enter 5 to restart container'
-  echo -e '\t Enter 6 to perform file maintenance'
+  echo -e '\t Enter 6 to check Ardent Status'
   echo -e '\t Enter 7 to update Ardent'
   echo -e '\t Enter 8 to start container'
   echo -e '\t Enter 9 to stop container' 
@@ -32,12 +32,12 @@ func_date
   echo -e "Enter your selection "
   read answer
   case $answer in 
-    1) docker ps --format "table {{.Names}}"|grep qa_4 ;; 
-    2) func_uux_update ;;
+    1) func_uux_update ;; 
+    2) func_uux_automation_update ;;
     3) func_associate_update ;;
     4) func_pull_ardent ;;
     5) func_restart_container ;;
-    6) func_file_maint ;;
+    6) func_qa_status ;;
     7) func_ardent_update ;;
     8) func_start_container ;;
     9) func_stop_container ;;
