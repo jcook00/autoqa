@@ -1,6 +1,7 @@
 #!/bin/bash
 # This script will Check The Status Of QA Environment on AUS-LNX-DEV-04
 readonly PROGNAME=$(basename "$0")
+readonly LOCKFILE_DIR=/tmp
 
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
@@ -13,13 +14,17 @@ func_qa_status() {
 }
 
 func_qa_safe() {
-  ps aux | pgrep "${PROGNAME}"
-  if [ `echo $PROGNAME` == "auto_status.sh" ]; then
-    echo "The ${PROGNAME} is already running"
-    exit
-  else
-    func_qa_check("true")
+  LOCKFILE=/${LOCKFILE_DIR}/${PROGNAME}_lock.txt
+  if [ -e ${LOCKFILE} ] && kill -0 `cat ${LOCKFILE}`; then
+      echo "already running"
+      exit
   fi
+  # make sure the lockfile is removed when we exit and then claim it
+  trap "rm -f ${LOCKFILE}; exit" INT TERM EXIT
+  echo $$ > ${LOCKFILE}
+  # do stuff
+  sleep 30
+  rm -f ${LOCKFILE}
 
 }
 
@@ -57,3 +62,5 @@ func_qa_action(env) {
     func_qa_notify($env, "Failed To Start")
   fi
 }
+func_qa_status()
+
