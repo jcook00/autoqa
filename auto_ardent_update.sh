@@ -10,7 +10,7 @@ func_ardent_update() {
   echo "Please select the environment you want to update."
   read qa_num
   echo ${qa_env[$qa_num-1]}
-  
+
   cur_version=`docker inspect ${qa_env[$qa_num-1]} |grep Image | tail -1 | awk -F"/" '{ print $2}' | tr -d '",'`
   echo "Is this the Ardent version you want do update? Enter Y if correct" $cur_version
   read response
@@ -30,9 +30,14 @@ func_ardent_update() {
     sudo docker rm ${qa_env[$qa_num-1]}
     sleep 5
     echo "Please wait while we update the container with the new Ardent version" $new_version
-    sudo docker run -d --name=${qa_env[$qa_num-1]} --privileged -i -p ${port}:8001 -v /var/log/ardent.io/0000/${qa_env[$qa_num-1]}:/opt/code/ardent.io/logs -v /etc/opt/code/ardent.io/config/${qa_env[$qa_num-1]}:/opt/code/ardent.io/config.json -t base-local-docker.aus-bin-prd-00.q2dc.local/ardent_v${new_version} /bin/bash -c "cd /opt/code/ardent.io; npm start"
+      if [[ ${qa_env[$qa_num-1]} =~ "auto" ]]; then
+        q2_config=`echo ${qa_env[$qa_num-1]} | awk -F"_auto" '{print $1 $2}' | rev | cut -c 2- | rev`
+      else
+        q2_config=${qa_env[$qa_num-1]}
+      fi
+    sudo docker run -d --name=${qa_env[$qa_num-1]} --privileged -i -p ${port}:8001 -e Q2_CONFIG_ROOT=\'${q2_config}\' -v /var/log/ardent.io/0000/${qa_env[$qa_num-1]}:/opt/code/ardent.io/logs -v /etc/opt/code/ardent.io/config/${qa_env[$qa_num-1]}:/opt/code/ardent.io/config.json -t base-local-docker.aus-bin-prd-00.q2dc.local/ardent_v${new_version} /bin/bash -c "cd /opt/code/ardent.io; npm start"
 
-    sleep 5 
+    sleep 5
   else
     echo 'Skipping...'
   fi
